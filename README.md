@@ -86,6 +86,20 @@ Then, create a Pull Request to merge into **develop**.
 
 ---
 
+## 🎯 Exception Handling
+
+The application implements a centralized exception handler that provides consistent JSON responses for API errors:
+
+### Custom Exception Handler
+
+The **App\Exceptions\Handler** class extends Laravel's base exception handler and provides:
+Consistent JSON response format for API requests
+Automatic logging of errors in production
+Proper HTTP status codes for different exception types
+Support for both web and API error handling
+
+---
+
 ## 📜 License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details.

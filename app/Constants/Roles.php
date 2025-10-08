@@ -4,14 +4,16 @@ namespace App\Constants;
 
 class Roles
 {
-    public const SUPPORT_AGENT = 'support_agent';
     public const ADMIN = 'admin';
+    public const SUPPORT_AGENT = 'support_agent';
+    public const FIELD_TECHNICIAN = 'field_technician';
 
     public static function labels(): array
     {
         return [
-            self::SUPPORT_AGENT => 'Support Agent',
             self::ADMIN => 'Admin',
+            self::SUPPORT_AGENT => 'Support Agent',
+            self::FIELD_TECHNICIAN => 'field technician',
         ];
     }
 

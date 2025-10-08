@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $superAgent = User::firstOrCreate(
+        $super_agent = User::firstOrCreate(
             ['email' => 'agent@gmail.com'],
             [
                 'name' => 'support Agent',
@@ -23,6 +23,17 @@ class UserSeeder extends Seeder
             ]
         );
 
-        $superAgent->assignRole(Roles::SUPPORT_AGENT);
+        $super_agent->assignRole(Roles::SUPPORT_AGENT);
+
+        $field_technician = User::firstOrCreate(
+            ['email' => 'technician@gmail.com'],
+            [
+                'name'=> 'technician',
+                'password' => Hash::make('12345678'),
+                'email_verified_at' => now(),
+            ]
+        );
+
+        $field_technician->assignRole(Roles::FIELD_TECHNICIAN);
     }
 }
