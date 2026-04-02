@@ -14,6 +14,17 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'admin',
+                'password' => Hash::make('12345678'),
+                'email_verified_at' => now(),
+            ]
+        );
+
+        $admin->assignRole(Roles::ADMIN);
+
         $super_agent = User::firstOrCreate(
             ['email' => 'agent@gmail.com'],
             [
