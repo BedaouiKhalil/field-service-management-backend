@@ -2,48 +2,46 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\User;
 use App\Helpers\ApiResponse;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\Api\Auth\LoginRequest;
-use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
+use App\Services\Auth\AuthService;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
+use App\Http\Requests\Api\Auth\LoginRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
+
+    private AuthService $service;
+
+    public function __construct(AuthService  $authService)
+    {
+        $this->middleware('throttle:5,1')->only('login');
+        $this->service = $authService;
+    }
+
     public function login(LoginRequest $request)
     {
-        $user = User::whereEmail($request->email)
-            ->select(['id', 'name', 'email', 'password',])
-            ->with('roles:name')
-            ->first();
+        $credentials = $request->validated();
+        $deviceName = $request->input('device_name', $request->userAgent());
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return ApiResponse::sendResponse(401, 'Invalid credentials');
+        $data = $this->service->login($credentials, $deviceName);
+
+        if (!$data) {
+            return ApiResponse::error(message: 'Identifiants invalides', code: Response::HTTP_UNAUTHORIZED);
         }
 
-        $user->tokens()->where('name', $request->input('device_name'))->delete();
-        $token = $user->createToken($request->input('device_name'))->plainTextToken;
-
-        $data = [
-            'user' => new UserResource($user),
-            'token' => $token,
-            'token_type' => 'Bearer',
-        ];
-
-        return ApiResponse::sendResponse(200, 'Login successful', $data);
+        return ApiResponse::success(message: 'Login successful', data: $data);
     }
 
     public function me(Request $request)
     {
         $user = $request->user();
 
-        return ApiResponse::sendResponse(
-            200,
-            'User data retrieved successfully',
-            new UserResource($user)
+        return ApiResponse::success(
+            message: 'User data retrieved successfully',
+            data: new UserResource($user)
         );
     }
 
@@ -53,6 +51,6 @@ class AuthController extends Controller
 
         $user->currentAccessToken()?->delete();
 
-        return ApiResponse::sendResponse(200, 'Logout successful');
+        return ApiResponse::success(message: 'Logout successful');
     }
 }

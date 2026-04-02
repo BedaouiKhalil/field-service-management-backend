@@ -22,6 +22,16 @@ It provides authentication, authorization, and APIs to support both the web inte
 
 ---
 
+## 🏗️ Advanced Architecture Features
+
+- **Full Audit Trail:** Every change to critical data (like Customers) is tracked using `owen-it/laravel-auditing`, including user ID and old/new values.
+- **Centralized API Response Pattern:** Unified JSON response structure via `ApiResponse` helper for seamless Mobile/Frontend integration.
+- **Robust Exception Handling:** Custom `Handler` to catch and format API errors (Validation, Auth, 404) into consistent JSON payloads.
+- **Strict Typing with Constants:** Roles and Permissions managed via dedicated Constant classes to eliminate magic strings and ensure type safety.
+- **Automated Data Seeding:** Heavy datasets (Wilayas/Communes) managed via JSON-driven seeders for clean and fast database initialization.
+
+---
+
 ## ⚙️ Installation
 
 1. Clone the repository  
@@ -31,30 +41,35 @@ It provides authentication, authorization, and APIs to support both the web inte
    cd field-service-management-backend  
 ```
 
-1. Install dependencies
+2. Install dependencies
 
 ```bash
    composer install  
    npm install && npm run dev  
 ```
 
-1. Configure environment
+3. Configure environment
 
 ```bash
    cp .env.example .env  
    php artisan key:generate 
 ```
 
-1. Run migrations
+4. Run migrations
 
 ```bash
    php artisan migrate --seed  
 ```
 
-1. Start the server
-
+5. Start the server
+5.1: PHP Server
 ```bash
    php artisan serve  
+```
+
+5.2: Asset Compilation (Vite)
+```bash
+   npm run dev 
 ```
 
 ---

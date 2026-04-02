@@ -1,8 +1,12 @@
 <?php
 
+use App\Helpers\ApiResponse;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\api\CustomerController;
+use App\Http\Controllers\Api\WilayaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +22,17 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('/login', [AuthController::class, 'login']);
-
-        Route::middleware('auth:sanctum')->group(function () {
-            Route::post('/logout', [AuthController::class, 'logout']);
-            Route::get('/me', [AuthController::class, 'me']);
-        });
     });
+
+    Route::get('wilayas/{wilaya}/communes', [WilayaController::class, 'communes']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/auth/logout', [AuthController::class, 'logout']);
+        Route::get('/auth/me', [AuthController::class, 'me']);
+        Route::apiResource('customers', CustomerController::class);
+    });
+});
+
+Route::fallback(function () {
+    return ApiResponse::error(message: 'Route not found.', code: Response::HTTP_NOT_FOUND);
 });

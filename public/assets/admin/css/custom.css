@@ -1,0 +1,30 @@
+.pagination svg {
+    width: 1em !important;
+    height: 1em !important;
+}
+
+.pagination .hidden {
+    display: none !important;
+}
+
+.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    margin-left: 3px;
+    justify-content: flex-start !important;
+}
+
+.page-link {
+    padding: .375rem .75rem;
+    color: #3b7ddd;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #3b7ddd;
+    border-color: #3b7ddd;
+}
