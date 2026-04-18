@@ -34,40 +34,40 @@ It provides authentication, authorization, and APIs to support both the web inte
 
 ## ⚙️ Installation
 
-1. Clone the repository  
+### 1. Clone the repository  
 
 ```bash
    git clone https://github.com/BedaouiKhalil/field-service-management-backend.git  
    cd field-service-management-backend  
 ```
 
-2. Install dependencies
+### 2. Install dependencies
 
 ```bash
    composer install  
    npm install && npm run dev  
 ```
 
-3. Configure environment
+### 3. Configure environment
 
 ```bash
    cp .env.example .env  
    php artisan key:generate 
 ```
 
-4. Run migrations
+### 4. Run migrations
 
 ```bash
    php artisan migrate --seed  
 ```
 
-5. Start the server
-5.1: PHP Server
+### 5. Start the server
+1. PHP Server
 ```bash
    php artisan serve  
 ```
 
-5.2: Asset Compilation (Vite)
+2. Asset Compilation (Vite)
 ```bash
    npm run dev 
 ```

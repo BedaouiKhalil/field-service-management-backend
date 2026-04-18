@@ -44,19 +44,11 @@ class CustomerController extends Controller
      */
     public function store(AddRequest $request)
     {
-        $customer = $this->service->store($request->validated());
+        $this->service->store($request->validated());
 
         return redirect()
-            ->back()
+            ->route('admin.customers.create')
             ->with('success', 'Customer created successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Customer $customer)
-    {
-        return view('admin.customers.show', compact('customer'));
     }
 
     /**
@@ -74,7 +66,7 @@ class CustomerController extends Controller
      */
     public function update(EditRequest $request, Customer $customer)
     {
-        $customer = $this->service->update($request->validated(), $customer);
+        $this->service->update($request->validated(), $customer);
 
         return redirect()->back()
             ->with('success', 'Customer updated successfully.');

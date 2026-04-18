@@ -28,7 +28,7 @@ class CustomerFactory extends Factory
             'wilaya_id'    => $commune?->wilaya_id,
             'commune_id'   => $commune?->id,
             'address'      => $this->faker->streetAddress,
-            'created_by'   => 1,
+            'created_by'   => auth()->id() ?? 1,
         ];
     }
 }

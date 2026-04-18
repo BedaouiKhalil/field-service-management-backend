@@ -10,19 +10,23 @@ class CustomerService
     {
         $query = Customer::with(['wilaya', 'commune']);
 
-        if (!empty($params['name'])) {
-            $query->where('name', 'LIKE', '%' . $params['name'] . '%');
+        $name = data_get($params, 'name');
+        $wilayaId = data_get($params, 'wilaya_id');
+        $communeId = data_get($params, 'commune_id');
+
+        if (!empty($name)) {
+            $query->where('name', 'LIKE', "%$name%");
         }
 
-        if (!empty($params['wilaya_id'])) {
-            $query->where('wilaya_id', $params['wilaya_id']);
+        if (!empty($wilayaId)) {
+            $query->where('wilaya_id', $wilayaId);
         }
 
-        if (!empty($params['commune_id'])) {
-            $query->where('commune_id', $params['commune_id']);
+        if (!empty($communeId)) {
+            $query->where('commune_id', $communeId);
         }
 
-        $limit = $params['limit'] ?? 10;
+        $limit = min(data_get($params, 'limit', 10), 100);
 
         return $query->latest()->paginate($limit);
     }
