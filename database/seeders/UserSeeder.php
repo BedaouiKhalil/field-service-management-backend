@@ -17,7 +17,8 @@ class UserSeeder extends Seeder
         $admin = User::firstOrCreate(
             ['email' => 'admin@gmail.com'],
             [
-                'name' => 'admin',
+                'first_name' => 'admin',
+                'last_name' => 'admin',
                 'password' => Hash::make('12345678'),
                 'email_verified_at' => now(),
             ]
@@ -28,7 +29,8 @@ class UserSeeder extends Seeder
         $super_agent = User::firstOrCreate(
             ['email' => 'agent@gmail.com'],
             [
-                'name' => 'support Agent',
+                'first_name' => 'support Agent',
+                'last_name' => 'support Agent',
                 'password' => Hash::make('12345678'),
                 'email_verified_at' => now(),
             ]
@@ -39,7 +41,8 @@ class UserSeeder extends Seeder
         $field_technician = User::firstOrCreate(
             ['email' => 'technician@gmail.com'],
             [
-                'name'=> 'technician',
+                'first_name'=> 'technician',
+                'last_name'=> 'technician',
                 'password' => Hash::make('12345678'),
                 'email_verified_at' => now(),
             ]
