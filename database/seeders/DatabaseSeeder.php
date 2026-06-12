@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             WilayaSeeder::class,
             CommuneSeeder::class,
             CustomerSeeder::class,
+            TaskSeeder::class,
         ]);
     }
 }

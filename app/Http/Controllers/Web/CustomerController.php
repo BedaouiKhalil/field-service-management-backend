@@ -47,7 +47,7 @@ class CustomerController extends Controller
         $this->service->store($request->validated());
 
         return redirect()
-            ->route('admin.customers.create')
+            ->route('admin.customers.index')
             ->with('success', 'Customer created successfully.');
     }
 
@@ -68,7 +68,8 @@ class CustomerController extends Controller
     {
         $this->service->update($request->validated(), $customer);
 
-        return redirect()->back()
+        return redirect()
+            ->route('admin.customers.index')
             ->with('success', 'Customer updated successfully.');
     }
 
@@ -82,5 +83,19 @@ class CustomerController extends Controller
         return redirect()
             ->back()
             ->with('success', 'Customer deleted successfully.');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->get('q');
+
+        $customers = Customer::select('id', 'name')
+            ->when($search, function ($query, $search) {
+                return $query->where('name', 'LIKE', "%{$search}%");
+            })
+            ->limit(10)
+            ->get();
+
+        return response()->json($customers);
     }
 }

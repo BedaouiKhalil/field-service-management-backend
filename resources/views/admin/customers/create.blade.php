@@ -58,7 +58,7 @@
                             @enderror
                         </div>
 
-                        <x-form.location-selector :wilayas="$wilayas" :selectedWilaya="old('wilaya_id')" :selectedCommune="old('commune_id')" />
+                        <x-location-select :wilayas="$wilayas" :selectedWilaya="old('wilaya_id')" :selectedCommune="old('commune_id')" />
 
                         <div class="col-md-12">
                             <label for="address" class="form-label">Address</label>

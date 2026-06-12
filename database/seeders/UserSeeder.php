@@ -38,16 +38,12 @@ class UserSeeder extends Seeder
 
         $super_agent->assignRole(Roles::SUPPORT_AGENT);
 
-        $field_technician = User::firstOrCreate(
-            ['email' => 'technician@gmail.com'],
-            [
-                'first_name'=> 'technician',
-                'last_name'=> 'technician',
-                'password' => Hash::make('12345678'),
-                'email_verified_at' => now(),
-            ]
-        );
+        $technicians = User::factory()
+            ->count(10)
+            ->create();
 
-        $field_technician->assignRole(Roles::FIELD_TECHNICIAN);
+        foreach ($technicians as $technician) {
+            $technician->assignRole(Roles::TECHNICIAN);
+        }
     }
 }

@@ -8,6 +8,8 @@ class Permissions
     public const MANAGE_CUSTOMER = 'manage_customer';
     public const VIEW_USER = 'view_user';
     public const MANAGE_USER = 'manage_user';
+    public const VIEW_TASK = 'view_task';
+    public const MANAGE_TASK = 'manage_task';
 
     public static function labels(): array
     {
@@ -16,6 +18,8 @@ class Permissions
             self::MANAGE_CUSTOMER => 'Manage customer',
             self::VIEW_USER => 'View user',
             self::MANAGE_USER => 'Manage user',
+            self::VIEW_TASK => 'View task',
+            self::MANAGE_TASK => 'Manage task',
         ];
     }
 

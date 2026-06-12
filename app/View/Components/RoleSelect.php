@@ -11,14 +11,11 @@ class RoleSelect extends Component
     /**
      * Create a new component instance.
      */
-    public $roles;
-    public $selected;
 
-    public function __construct($roles, $selected = null)
-    {
-        $this->roles = $roles;
-        $this->selected = $selected;
-    }
+    public function __construct(
+        public $roles,
+        public $selected = null
+    ) {}
 
     /**
      * Get the view / contents that represent the component.

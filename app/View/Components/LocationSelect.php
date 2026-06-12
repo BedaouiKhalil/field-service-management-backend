@@ -1,12 +1,12 @@
 <?php
 
-namespace App\View\Components\Form;
+namespace App\View\Components;
 
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 
-class LocationSelector extends Component
+class LocationSelect extends Component
 {
     public function __construct(
         public Collection $wilayas,
@@ -16,6 +16,6 @@ class LocationSelector extends Component
 
     public function render(): View
     {
-        return view('components.form.location-selector');
+        return view('components.location-select');
     }
 }
