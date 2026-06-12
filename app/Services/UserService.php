@@ -11,20 +11,16 @@ class UserService
     public function list(array $params)
     {
         $query = User::with(['roles']);
+        $keyword = trim(data_get($params, 'keyword'));
 
-        $keyword = data_get($params, 'keyword');
-
-        if (!empty($keyword)) {
-            if (!empty($keyword)) {
-                $query->where(function ($q) use ($keyword) {
-                    $q->where('first_name', 'like', '%' . $keyword . '%')
-                        ->orWhere('last_name', 'like', '%' . $keyword . '%');
-                });
-            }
+        if ($keyword) {
+            $query->where(function ($q) use ($keyword) {
+                $q->where('first_name', 'like', "%$keyword%")
+                    ->orWhere('last_name', 'like', "%$keyword%");
+            });
         }
 
-        $limit = min(data_get($params, 'limit', config('app.defaults.pagination_limit', 10)), 100);
-
+        $limit = min(data_get($params, 'limit', 10), 100);
         return $query->latest()->paginate($limit);
     }
 
@@ -51,8 +47,8 @@ class UserService
 
             $user->update([
                 'first_name' => $data['first_name'],
-                'last_name'  => $data['last_name'],
-                'email'      => $data['email'],
+                'last_name' => $data['last_name'],
+                'email' => $data['email'],
             ]);
 
             $user->syncRoles([$data['role']]);

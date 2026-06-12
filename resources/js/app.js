@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 // Toastr
 import toastr from 'toastr';
 import 'toastr/build/toastr.min.css';
+import TomSelect from 'tom-select';
+import 'tom-select/dist/css/tom-select.css';
 
 // ---------------------------
 // TOASTR
@@ -21,11 +23,6 @@ toastr.options = {
 window.toastr = toastr;
 
 document.addEventListener('DOMContentLoaded', function () {
-
-    const flashSuccess = document.querySelector('#flash-success');
-    if (flashSuccess) {
-        toastr.success(flashSuccess.value);
-    }
 
     // ---------------------------
     // SWEETALERT2 -  delete
@@ -193,16 +190,45 @@ document.addEventListener('DOMContentLoaded', function () {
     // ---------------------------
     // TOASTR
     // ---------------------------
-    document.addEventListener('DOMContentLoaded', function () {
-        const successInput = document.getElementById('flash-success');
-        if (successInput && successInput.value) {
-            toastr.success(successInput.value);
-        }
+    const flashSuccess = document.getElementById('flash-success');
+    if (flashSuccess?.value) {
+        toastr.success(flashSuccess.value);
+    }
 
-        const errorInput = document.getElementById('flash-error');
-        if (errorInput && errorInput.value) {
-            toastr.error(errorInput.value);
-        }
+    const flashError = document.getElementById('flash-error');
+    if (flashError?.value) {
+        toastr.error(flashError.value);
+    }
+
+
+    document.querySelectorAll('.tom-select-ajax').forEach(el => {
+        const url = el.getAttribute('data-url');
+        const labelField = el.getAttribute('data-label') || 'name';
+        const searchField = el.getAttribute('data-search') || 'name';
+
+        new TomSelect(el, {
+            valueField: 'id',
+            labelField: labelField,
+            searchField: searchField,
+            loadThrottle: 300,
+            preload: false,
+            placeholder: el.querySelector('option')?.textContent || "Search...",
+            load: function (query, callback) {
+                if (!query.length) return callback();
+
+                const separator = url.includes('?') ? '&' : '?';
+
+                fetch(`${url}${separator}q=${encodeURIComponent(query)}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Server error');
+                        return response.json();
+                    })
+                    .then(json => {
+                        callback(json);
+                    }).catch(() => {
+                        callback();
+                    });
+            }
+        });
     });
-
 });

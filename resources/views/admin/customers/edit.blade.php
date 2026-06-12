@@ -60,7 +60,7 @@
                             @enderror
                         </div>
 
-                        <x-form.location-selector :wilayas="$wilayas" :selectedWilaya="old('wilaya_id', $customer->wilaya_id)" :selectedCommune="old('commune_id', $customer->commune_id)" />
+                        <x-location-select :wilayas="$wilayas" :selectedWilaya="old('wilaya_id', $customer->wilaya_id)" :selectedCommune="old('commune_id', $customer->commune_id)" />
 
                         <div class="col-md-12">
                             <label for="address" class="form-label">Address</label>

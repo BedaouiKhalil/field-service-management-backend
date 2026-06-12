@@ -29,6 +29,9 @@ It provides authentication, authorization, and APIs to support both the web inte
 - **Robust Exception Handling:** Custom `Handler` to catch and format API errors (Validation, Auth, 404) into consistent JSON payloads.
 - **Strict Typing with Constants:** Roles and Permissions managed via dedicated Constant classes to eliminate magic strings and ensure type safety.
 - **Automated Data Seeding:** Heavy datasets (Wilayas/Communes) managed via JSON-driven seeders for clean and fast database initialization.
+- **Service Layer Pattern:** Business logic is decoupled from controllers using dedicated Service classes (`UserService`), promoting reusability and cleaner code.
+- **Atomic Transactions:** Database operations are wrapped in SQL transactions to ensure data consistency during complex store/update processes.
+- **Custom Blade Components:** UI elements like role selectors are encapsulated into reusable components for a DRY (Don't Repeat Yourself) frontend.
 
 ---
 

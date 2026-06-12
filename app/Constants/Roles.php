@@ -6,14 +6,14 @@ class Roles
 {
     public const ADMIN = 'admin';
     public const SUPPORT_AGENT = 'support_agent';
-    public const FIELD_TECHNICIAN = 'field_technician';
+    public const TECHNICIAN = 'technician';
 
     public static function labels(): array
     {
         return [
             self::ADMIN => 'Admin',
             self::SUPPORT_AGENT => 'Support Agent',
-            self::FIELD_TECHNICIAN => 'field technician',
+            self::TECHNICIAN => 'technician',
         ];
     }
 

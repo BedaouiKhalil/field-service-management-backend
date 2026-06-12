@@ -22,7 +22,7 @@ class RoleSeeder extends Seeder
         $roles = [
             ['name' => Roles::ADMIN, 'guard_name' => 'web'],
             ['name' => Roles::SUPPORT_AGENT, 'guard_name' => 'web'],
-            ['name' => Roles::FIELD_TECHNICIAN, 'guard_name' => 'web'],
+            ['name' => Roles::TECHNICIAN, 'guard_name' => 'web'],
             // To add a new role, just add a new line:
             // ['name' => 'roleName', 'guard_name' => 'guardName'],
         ];

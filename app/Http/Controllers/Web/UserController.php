@@ -9,6 +9,7 @@ use App\Http\Requests\User\EditRequest;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -16,8 +17,8 @@ class UserController extends Controller
     public function __construct(
         private UserService $service
     ) {
-        $this->middleware('permission:' . Permissions::VIEW_CUSTOMER)->only(['index', 'show']);
-        $this->middleware('permission:' . Permissions::MANAGE_CUSTOMER)->except(['index', 'show']);
+        $this->middleware('permission:' . Permissions::VIEW_USER)->only(['index', 'show']);
+        $this->middleware('permission:' . Permissions::MANAGE_USER)->only(['store', 'edit', 'create', 'update', 'destroy']);
     }
 
     /**
@@ -83,5 +84,32 @@ class UserController extends Controller
         return redirect()
             ->back()
             ->with('success', 'User deleted successfully.');
+    }
+
+    public function searchUsers(Request $request)
+    {
+        $search = $request->get('q');
+        $role = $request->get('role');
+
+        if (!$role) {
+            return response()->json([]);
+        }
+
+        $technicians = User::role($role)
+            ->select('id', 'first_name', 'last_name')
+            ->when($search, function ($query, $search) {
+                return $query->where('first_name', 'LIKE', "%{$search}%")
+                    ->orWhere('last_name', 'LIKE', "%{$search}%");
+            })
+            ->limit(10)
+            ->get()
+            ->map(function ($user) {
+                return [
+                    'id' => $user->id,
+                    'full_name' => $user->first_name . ' ' . $user->last_name
+                ];
+            });
+
+        return response()->json($technicians);
     }
 }
