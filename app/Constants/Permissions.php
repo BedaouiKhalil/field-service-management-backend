@@ -10,6 +10,7 @@ class Permissions
     public const MANAGE_USER = 'manage_user';
     public const VIEW_TASK = 'view_task';
     public const MANAGE_TASK = 'manage_task';
+    public const UPDATE_TASK_STATUS = 'update_task_status';
 
     public static function labels(): array
     {
@@ -20,6 +21,7 @@ class Permissions
             self::MANAGE_USER => 'Manage user',
             self::VIEW_TASK => 'View task',
             self::MANAGE_TASK => 'Manage task',
+            self::UPDATE_TASK_STATUS => 'Update task status',
         ];
     }
 
