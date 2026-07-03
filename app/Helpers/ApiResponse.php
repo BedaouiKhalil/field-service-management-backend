@@ -13,11 +13,12 @@ class ApiResponse
         return response()->json([
             'success' => true,
             'message' => $message,
-            'data'    => $data,
+            'data' => $data,
+            'status' => $code,
         ], $code);
     }
 
-    public static function paginated(ResourceCollection $collection, string $message): JsonResponse
+    public static function paginated(ResourceCollection $collection, string $message, int $code = Response::HTTP_OK): JsonResponse
     {
         $resourceData = $collection->response()->getData(true);
 
@@ -27,6 +28,7 @@ class ApiResponse
             'data'    => $resourceData['data'],
             'meta'    => $resourceData['meta'] ?? null,
             'links'   => $resourceData['links'] ?? null,
+            'status'    => $code,
         ], fn($value) => $value !== null), Response::HTTP_OK);
     }
 
@@ -36,6 +38,7 @@ class ApiResponse
             'success' => false,
             'message' => $message,
             'errors'  => $errors,
+            'status' => $code,
         ], $code);
     }
 }

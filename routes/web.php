@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 // redirection (root /)
-Route::get('/', HomeController::class);
+//Route::get('/', HomeController::class);
+
+
 
 Route::middleware(['auth'])->name('admin.')->prefix('dashboard')->group(function () {
     Route::view('/', 'admin.dashboard.index')->name('index');
@@ -29,4 +31,6 @@ Route::middleware(['auth'])->name('admin.')->prefix('dashboard')->group(function
     Route::resource('customers', CustomerController::class);
     Route::resource('users', UserController::class);
     Route::resource('tasks', TaskController::class);
+
+    
 });

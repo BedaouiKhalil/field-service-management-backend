@@ -12,9 +12,7 @@ class AuthService
     public function login(array $credentials, string $device)
     {
         $user = User::whereEmail($credentials['email'])
-            ->select(['id', 'name', 'email', 'password'])
             ->first();
-
 
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
             return null;

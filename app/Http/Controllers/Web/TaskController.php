@@ -3,19 +3,15 @@
 namespace App\Http\Controllers\Web;
 
 use App\Constants\Permissions;
-use App\Constants\Roles;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Task\AddRequest;
 use App\Http\Requests\Task\EditRequest;
-use App\Models\Customer;
 use App\Models\Task;
-use App\Models\User;
 use App\Services\TaskService;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-
     public function __construct(private TaskService $service)
     {
         $this->middleware('permission:' . Permissions::VIEW_TASK)->only(['index', 'show']);
