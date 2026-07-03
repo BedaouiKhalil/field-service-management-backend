@@ -37,7 +37,7 @@ class TaskFactory extends Factory
 
         return [
             'title' => $this->faker->sentence(4),
-            'description' => $this->faker->optional()->paragraph(),
+            'description' => $this->faker->paragraph(),
             'customer_id' => Customer::factory(),
             'technician_id' => $techinician?->id ?? User::factory(),
             'status' => $status,

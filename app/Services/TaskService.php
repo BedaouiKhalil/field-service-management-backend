@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\TaskStatus;
 use App\Models\Task;
 use Illuminate\Support\Facades\DB;
 
@@ -10,11 +11,15 @@ class TaskService
 
     public function list(array $params)
     {
-        $query = Task::with(['customer', 'technician']);
         $title = trim(data_get($params, 'title'));
         $status = trim(data_get($params, 'status'));
         $customer_id = data_get($params, 'customer_id');
         $technician_id = data_get($params, 'technician_id');
+
+        $currentUser = auth()->user();
+
+        $query = Task::with(['customer', 'technician'])
+            ->visibleFor($currentUser);
 
         if ($title) {
             $query->where('title', 'like', "%$title%");
@@ -61,6 +66,26 @@ class TaskService
                 'customer_id' => $data['customer_id'],
                 'technician_id' => $data['technician_id'],
             ]);
+
+            return $task;
+        });
+    }
+
+    public function updateStatus(string $statusValue, Task $task): Task
+    {
+        return DB::transaction(function () use ($statusValue, $task) {
+            // Validation Enum
+            $newStatus = TaskStatus::from($statusValue);
+
+            $updateData = [
+                'status' => $newStatus->value,
+            ];
+
+            if ($newStatus === TaskStatus::COMPLETED) {
+                $updateData['completed_at'] = now();
+            }
+
+            $task->update($updateData);
 
             return $task;
         });
