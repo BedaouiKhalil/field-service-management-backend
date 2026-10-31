@@ -17,3 +17,11 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+docker-compose.override.yml
+
+.env.*
+!.env.example
+
+.DS_Store
+Thumbs.db
