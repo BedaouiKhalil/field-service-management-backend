@@ -1,0 +1,22 @@
+services:
+    app:
+        build:
+            context: .
+            target: prod
+        restart: unless-stopped
+        env_file: .env.production
+        volumes:
+            - storage:/var/www/storage
+
+    nginx:
+        build:
+            context: .
+            target: nginx-prod
+        restart: unless-stopped
+        ports:
+            - "80:80"
+        depends_on:
+            - app
+
+volumes:
+    storage:
